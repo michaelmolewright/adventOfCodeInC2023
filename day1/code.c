@@ -6,7 +6,7 @@ int main ()
 { 
     FILE *fp;
 
-    fp = fopen("/Users/mole/Desktop/advent_C_2023/day1/input.txt ", "r");
+    fp = fopen("./input.txt", "r");
     if(fp == NULL){
         perror("Error");
         return 0;
