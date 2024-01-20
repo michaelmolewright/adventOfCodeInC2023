@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-int *get_array_numbers(char *numbers){
+long int *get_array_numbers(char *numbers, int size){
     
-    int * values = (int*) malloc(strlen(numbers) * sizeof(int));
+    long int * values = (long int*) malloc((size + 1) * sizeof(long int));
     
     char * num_token = strtok(numbers, " ");
     int index = 0;
     while(num_token != NULL){
-        values[index] = atoi(num_token);
+        values[index] = atol(num_token);
         index = index + 1;
         num_token = strtok(NULL, " ");
     }

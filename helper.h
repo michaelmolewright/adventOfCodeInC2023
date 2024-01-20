@@ -1,1 +1,1 @@
-int *get_array_numbers(char *numbers);
+long int *get_array_numbers(char *numbers,int size);
