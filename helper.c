@@ -49,6 +49,12 @@ void freeArray(Array *a) {
   a->used = a->size = 0;
 }
 
+void freesArray(Array *a) {
+  free(a->sArray);
+  a->array = NULL;
+  a->used = a->size = 0;
+}
+
 
 long int *get_array_numbers(char *numbers, int size){
     
