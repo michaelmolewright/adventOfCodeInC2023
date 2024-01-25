@@ -69,25 +69,28 @@ int traverse(nodeArray *nA, char *instructions, int s, int f){
     int index = 0;
     int cycle = strlen(instructions);
 
+    int nodeIndex = s;
     node *current = nA->array[s];
+    printf("%s\n",current->sourcenode);
     while(!finished){
-        if(current->leftdestnode == f || current->rightdestnode == f){
-            finished = true;
-            return index;
-        }
-
-        char dir = instructions[index%cycle];
-        //printf("%c", dir);
+        char dir = instructions[index%(cycle-1)];
         if (dir == 'L'){
-            current = nA->array[current->leftdestnode];
+            nodeIndex = current->leftdestnode;
+            current = nA->array[nodeIndex];
+            //printf("%c, %s, %d, %d\n",dir, current->sourcenode, current->leftdestnode, index);
         }
         if (dir == 'R'){
-            current = nA->array[current->rightdestnode];
+            nodeIndex = current->rightdestnode;
+            current = nA->array[nodeIndex];
+            //printf("%c, %s, %d, %d\n",dir, current->sourcenode, current->rightdestnode,index);
         }
+
         index++;
-    }   
-    
-    return 1;
+        if(nodeIndex == f){
+            return index;
+        }
+    } 
+    return -1;
 }
 
 
@@ -95,7 +98,7 @@ int main(int argc, char *argv[]){
 
     FILE *fp;
 
-    fp = fopen("./test.txt", "r");
+    fp = fopen("./puzzle.txt", "r");
     if(fp == NULL){
         perror("Error");
         return 0;
@@ -106,7 +109,7 @@ int main(int argc, char *argv[]){
     ssize_t read;
 
     getline(&line, &len, fp); 
-    char *instructions = line;
+    char *instructions = strdup(line);
     //printf("%ld, %s\n", strlen(instructions), instructions);
 
     nodeArray nodes;
@@ -140,13 +143,13 @@ int main(int argc, char *argv[]){
         if (strcmp (nodes.array[i]->sourcenode, "ZZZ\0") == 0){
             finish = i;
         }
+        printf("INDEX: %d -- Node: %s, Left: %s (%d), Right: %s (%d)\n", i, nodes.array[i]->sourcenode, nodes.array[i]->leftnode, nodes.array[i]->leftdestnode, nodes.array[i]->rightnode, nodes.array[i]->rightdestnode);
 
-        
+    }    
         //printf("INDEX: %d -- Node: %s, Left: %s (%d), Right: %s (%d)\n", i, nodes.array[i]->sourcenode, nodes.array[i]->leftnode, nodes.array[i]->leftdestnode, nodes.array[i]->rightnode, nodes.array[i]->rightdestnode);
 
-    }
-    //printf("%d,%d\n", start, finish);
-    printf("%s\n\n", instructions);
+    // }
+    printf("%d,%d\n", start, finish);
     int answer = traverse(&nodes, instructions, start, finish);
     printf("Final Answer = %d\n", answer);
 
