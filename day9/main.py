@@ -19,7 +19,7 @@ def findVals(numbers):
     if zeros:
         return 0
     else:
-        return newline[len(newline)-1] + findVals(newline)
+        return newline[0] - findVals(newline)
 
 total = 0
 i = 0
@@ -28,7 +28,7 @@ for x in f:
     for a in range(0,len(arr)):
         arr[a] = int(arr[a])
     
-    newval = arr[-1] + findVals(arr)
+    newval = arr[0] - findVals(arr)
     total += newval
     print(i,", ",newval)
     i += 1
